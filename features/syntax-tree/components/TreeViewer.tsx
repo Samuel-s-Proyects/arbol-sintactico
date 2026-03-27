@@ -1,75 +1,55 @@
-import type { ASTNode } from '../types';
 import type { ParseResult } from '../utils/parser';
 import TreeNode from './TreeNode';
 import ErrorViewer from './ErrorViewer';
 import TreeLegend from './TreeLegend';
-import type { SyntaxExample } from '../types';
 
 interface TreeViewerProps {
   parseResult: ParseResult | null;
   isParsing: boolean;
-  /** Ejemplo activo: provee partialAST y errorExplanation para inválidos */
-  activeExample: SyntaxExample | null;
-  /** Si el código actual coincide exactamente con el del ejemplo */
-  isExactMatch: boolean;
 }
 
-export default function TreeViewer({
-  parseResult,
-  isParsing,
-  activeExample,
-  isExactMatch,
-}: TreeViewerProps) {
-  const showPartialTree =
-    isExactMatch &&
-    activeExample !== null &&
-    !activeExample.isValid &&
-    Boolean(activeExample.partialAST);
+export default function TreeViewer({ parseResult, isParsing }: TreeViewerProps) {
+  const ast = parseResult?.ast ?? null;
+  const error = parseResult?.error ?? null;
 
-  const tree: ASTNode | null = showPartialTree
-    ? (activeExample!.partialAST ?? null)
-    : (parseResult?.ast ?? null);
+  // Analizando…
+  if (isParsing) {
+    return (
+      <div className="flex min-h-40 items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50">
+        <p className="text-xs text-zinc-400">Analizando código…</p>
+      </div>
+    );
+  }
 
-  const parseError = showPartialTree ? null : (parseResult?.error ?? null);
+  // Editor vacío
+  if (!parseResult) {
+    return (
+      <div className="flex min-h-40 items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50">
+        <p className="text-xs text-zinc-400">Escribe código para ver el árbol.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-3">
-      {/* Estado: analizando */}
-      {isParsing && !showPartialTree && (
-        <div className="flex min-h-40 items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50">
-          <p className="text-xs text-zinc-400">Analizando código…</p>
-        </div>
-      )}
+      {/* Banner de error */}
+      {error && <ErrorViewer parseError={error} />}
 
-      {/* Árbol válido */}
-      {!isParsing && tree && !showPartialTree && (
+      {/* Árbol (completo o parcial) */}
+      {ast && (
         <div className="overflow-auto rounded-lg border border-zinc-200 bg-white p-4">
-          <TreeNode node={tree} isRoot />
+          {error && (
+            <p className="mb-3 text-xs italic text-zinc-400">
+              Árbol parcial: lo que el analizador logró construir antes del error.
+              Los nodos <span className="font-semibold text-red-400">⚠ Error</span> marcan dónde falló el parseo.
+            </p>
+          )}
+          <TreeNode node={ast} isRoot />
         </div>
       )}
 
-      {/* Árbol parcial de error de ejemplo */}
-      {showPartialTree && (
-        <ErrorViewer
-          partialAST={activeExample!.partialAST}
-          errorExplanation={activeExample!.errorExplanation}
-        />
-      )}
-
-      {/* Error de código de usuario */}
-      {!isParsing && !showPartialTree && parseError && (
-        <ErrorViewer parseError={parseError} />
-      )}
-
-      {/* Estado vacío */}
-      {!isParsing && !tree && !parseError && !showPartialTree && (
-        <div className="flex min-h-40 items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50">
-          <p className="text-xs text-zinc-400">Escribe código para ver el árbol.</p>
-        </div>
-      )}
-
-      {/* Guía de interpretación (solo cuando hay árbol ) */}
-      {(tree || showPartialTree) && <TreeLegend />}
+      {/* Guía de interpretación */}
+      {ast && <TreeLegend />}
     </div>
   );
 }

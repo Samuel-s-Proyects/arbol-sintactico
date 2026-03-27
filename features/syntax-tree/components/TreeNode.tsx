@@ -1,6 +1,5 @@
 import type { ASTNode } from '../types';
 
-// Traducción de tipos ESTree al español
 const NODE_LABELS_ES: Record<string, string> = {
   Program: 'Programa',
   IfStatement: 'Sentencia if',
@@ -38,7 +37,6 @@ const NODE_LABELS_ES: Record<string, string> = {
   ErrorNode: '⚠ Error',
 };
 
-// Clases Tailwind completas para que el compilador las incluya en el bundle
 const NODE_STYLES: Record<string, string> = {
   Program: 'bg-zinc-100 border-zinc-400 text-zinc-700',
   IfStatement: 'bg-blue-50 border-blue-400 text-blue-700',
@@ -95,7 +93,6 @@ export default function TreeNode({ node, isRoot = false }: TreeNodeProps) {
 
   return (
     <div className={isRoot ? '' : ''}>
-      {/* Etiqueta del nodo */}
       <div className="flex flex-wrap items-center gap-1.5">
         {node.role && (
           <>
@@ -116,19 +113,6 @@ export default function TreeNode({ node, isRoot = false }: TreeNodeProps) {
         </span>
       </div>
 
-      {/* Tooltip de error */}
-      {node.isError && node.errorInfo && (
-        <div className="ml-2 mt-1 rounded border border-red-100 bg-red-50 px-2 py-1">
-          <p className="font-mono text-xs text-red-500">
-            Encontró: <strong>{node.errorInfo.found}</strong>
-          </p>
-          <p className="font-mono text-xs text-red-400">
-            Esperaba: <strong>{node.errorInfo.expected}</strong>
-          </p>
-        </div>
-      )}
-
-      {/* Subárbol de hijos con líneas conectoras */}
       {hasChildren && (
         <div className="relative ml-5 mt-2 border-l-2 border-zinc-200 pl-5">
           {node.children!.map((child, index) => (

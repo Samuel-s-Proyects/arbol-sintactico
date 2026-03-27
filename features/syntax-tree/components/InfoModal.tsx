@@ -7,7 +7,6 @@ interface InfoModalProps {
 }
 
 export default function InfoModal({ onClose }: InfoModalProps) {
-  // Cerrar con Escape
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', handler);
@@ -38,8 +37,6 @@ export default function InfoModal({ onClose }: InfoModalProps) {
         </div>
 
         <div className="space-y-6 px-6 py-5">
-
-          {/* Sección 1 */}
           <section>
             <h3 className="mb-2 text-sm font-semibold text-zinc-900">¿Qué es un árbol sintáctico?</h3>
             <p className="text-sm leading-relaxed text-zinc-600">
@@ -53,7 +50,6 @@ export default function InfoModal({ onClose }: InfoModalProps) {
             </p>
           </section>
 
-          {/* Sección 2 */}
           <section>
             <h3 className="mb-2 text-sm font-semibold text-zinc-900">¿Cómo funciona el analizador sintáctico?</h3>
             <p className="text-sm leading-relaxed text-zinc-600">
@@ -68,18 +64,16 @@ export default function InfoModal({ onClose }: InfoModalProps) {
             </p>
           </section>
 
-          {/* Sección 3 */}
           <section>
             <h3 className="mb-2 text-sm font-semibold text-zinc-900">Cómo usar esta herramienta</h3>
             <ul className="space-y-1.5 text-sm text-zinc-600">
               <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-zinc-400">›</span>Selecciona un ejemplo de los botones superiores para pre-cargar código en el editor.</li>
               <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-zinc-400">›</span>Edita libremente el código en el panel izquierdo — el árbol se actualiza en tiempo real.</li>
-              <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-zinc-400">›</span>Los ejemplos inválidos muestran el <strong>árbol parcial</strong> y una explicación de cómo el parser detectó el error.</li>
+              <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-zinc-400">›</span>Los ejemplos inválidos muestran el <strong>árbol parcial real</strong> generado por el parser con recuperación de errores, y los nodos <strong>⚠ Error</strong> marcan exactamente dónde falló el análisis.</li>
               <li className="flex gap-2"><span className="mt-0.5 shrink-0 text-zinc-400">›</span>Escribe código propio (JavaScript) y observa cómo el parser lo interpreta.</li>
             </ul>
           </section>
 
-          {/* Sección 4: colores */}
           <section>
             <h3 className="mb-3 text-sm font-semibold text-zinc-900">Significado de los colores</h3>
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -101,7 +95,6 @@ export default function InfoModal({ onClose }: InfoModalProps) {
             </div>
           </section>
 
-          {/* Sección 5: leer el árbol */}
           <section>
             <h3 className="mb-2 text-sm font-semibold text-zinc-900">Cómo leer el árbol</h3>
             <ul className="space-y-1.5 text-sm text-zinc-600">

@@ -41,7 +41,6 @@ export default function TreeLegend() {
       {open && (
         <div className="space-y-5 pb-4 pt-1">
 
-          {/* Leyenda de colores */}
           <div>
             <p className="mb-2 text-xs font-medium text-zinc-500">Colores de los nodos</p>
             <div className="space-y-2">
@@ -56,7 +55,6 @@ export default function TreeLegend() {
             </div>
           </div>
 
-          {/* Consejos de lectura */}
           <div>
             <p className="mb-2 text-xs font-medium text-zinc-500">Cómo leer el árbol</p>
             <ul className="space-y-1.5">
@@ -69,7 +67,6 @@ export default function TreeLegend() {
             </ul>
           </div>
 
-          {/* Diagrama de relaciones */}
           <div>
             <p className="mb-2 text-xs font-medium text-zinc-500">Estructura del árbol</p>
             <pre className="rounded-lg bg-zinc-50 p-3 font-mono text-xs leading-relaxed text-zinc-500">

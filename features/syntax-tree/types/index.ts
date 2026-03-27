@@ -4,9 +4,7 @@ export interface ASTNode {
   value?: string | number;
   operator?: string;
   children?: ASTNode[];
-  // Para nodos de error en el árbol parcial de ejemplos inválidos
   isError?: boolean;
-  errorInfo?: { found: string; expected: string };
 }
 
 export interface ParseError {
@@ -21,8 +19,4 @@ export interface SyntaxExample {
   description: string;
   code: string;
   isValid: boolean;
-  // Para ejemplos inválidos: árbol parcial de lo que se parseó antes del error
-  partialAST?: ASTNode;
-  // Para ejemplos inválidos: explicación didáctica del error
-  errorExplanation?: string;
 }
